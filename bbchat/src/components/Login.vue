@@ -30,6 +30,8 @@ export default {
         .then(successResponse => {
           if (successResponse.data.code === 200) {
             this.$router.replace({path: '/index'})
+          } else {
+            alert('密码错误')
           }
         })
         .catch(failResponse => {
