@@ -21,14 +21,14 @@ public class User {
     @Column(name = "accountId", length = 10, nullable = false)
     int id;
 
-    @Column(name = "name",length = 10, nullable = false)
+    //@Column(name = "name",length = 10, nullable = false)
     String username;
 
-    @Column(name = "code", length = 50, nullable = false)
+    //@Column(name = "code", length = 50, nullable = false)
     String password;
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
