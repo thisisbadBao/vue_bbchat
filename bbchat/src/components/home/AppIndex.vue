@@ -8,8 +8,8 @@
             <template slot="title">房间列表</template>
             <el-menu-item index="1-1">room1</el-menu-item>
             <el-menu-item index="1-2">room2</el-menu-item>
-            <el-menu-item index="1-2">room3</el-menu-item>
-            <el-menu-item index="1-2">room4</el-menu-item>
+            <el-menu-item index="1-3">room3</el-menu-item>
+            <el-menu-item index="1-4">room4</el-menu-item>
           </el-menu-item-group>
         </el-menu>
       </el-aside>
@@ -65,7 +65,6 @@ export default {
 </script>
 
 <style>
-
 
 .main{
   height: 100vh;
