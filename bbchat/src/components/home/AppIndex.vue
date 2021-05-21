@@ -2,23 +2,26 @@
   <div class="main">
     <div class="wrapper">
       <div class="box header">Hello world, this is bbChat.</div>
+<!--      侧边房间列表-->
       <el-aside class="box sidebar">
-        <el-menu :default-openeds="[]">
-          <el-menu-item-group>
-            <template slot="title">房间列表</template>
-            <el-menu-item index="1-1">room1</el-menu-item>
-            <el-menu-item index="1-2">room2</el-menu-item>
-            <el-menu-item index="1-3">room3</el-menu-item>
-            <el-menu-item index="1-4">room4</el-menu-item>
-          </el-menu-item-group>
+        <el-menu :default-openeds="[]"
+                 default-active="1"
+                 class="el-menu-vertical-demo"
+        >
+          <el-button type="primary" plain @click="addRoom">创建房间</el-button>
+          <el-menu-item v-for="item in rooms" :index="item.name" :key="item.name" @click="getCurrentActive(item.name)">
+            <i class="el-icon-menu"></i>
+            <span slot="title">{{item.title}}</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
-      <div class="box content">
+<!--      聊天区域-->
+      <div class="box content"  v-for="item in chatSections" :key="item.chatName" :id="item.chatName">
         <div class="chatWrapper">
           <el-tabs class="messageBox" stretch="true">
-            <el-tab-pane >
+            <el-tab-pane>
               <span slot="label"><i class="el-icon-chat-line-round"></i></span>
-              <div>消息区</div>
+              <div>{{item.chatTitle}}</div>
             </el-tab-pane>
             <el-tab-pane>
               <span slot="label"><i class="el-icon-user-solid"></i></span>
@@ -47,18 +50,62 @@ export default {
   name: 'AppIndex',
   data () {
     return {
-      messageInput: ''
+      messageInput: '',
+      // 房间列表
+      currentRoom: '1',
+      rooms: [
+        {
+          title: 'initial room',
+          name: '1'
+        }
+      ],
+      roomIndex: 1,
+      // 聊天区域
+      currentChat: '1',
+      chatSections: [
+        {
+          chatTitle: 'initial room',
+          chatName: '1',
+          isActive: true
+        }
+      ],
+      chatIndex: 1
     }
   },
   methods: {
     sendMessage () {
       console.log('sent!')
     },
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
+    addRoom (targetName) {
+      let newRoomName = ++this.roomIndex + ''
+      this.rooms.push({
+        title: 'New Room' + newRoomName,
+        name: newRoomName
+      })
+      this.currentRoom = newRoomName
+      for (let room of this.chatSections) {
+        room.isActive = false
+        document.getElementById(room.chatName).style.display = 'none'
+      }
+      this.chatSections.push({
+        chatTitle: 'New Room' + newRoomName,
+        chatName: newRoomName,
+        isActive: true
+      })
+      this.chatIndex = newRoomName
     },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
+    getCurrentActive (index) {
+      console.log('打开房间' + index)
+      this.openRoom(index)
+    },
+    openRoom (index) {
+      console.log('房间' + index + '已打开')
+      for (let room of this.chatSections) {
+        room.isActive = false
+        document.getElementById(room.chatName).style.display = 'none'
+      }
+      this.chatSections[index - 1].isActive = true
+      document.getElementById(this.chatSections[index - 1].chatName).style.display = 'block'
     }
   }
 }
