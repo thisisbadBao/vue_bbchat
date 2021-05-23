@@ -130,23 +130,25 @@ export default {
         })
         .then(successResponse => {
           console.log(successResponse.data)
-          if (successResponse.data === 200) {
+          if (successResponse.data.code === 2) {
+            this.$message({
+              type: 'error',
+              message: '密码错误'
+            })
+          } else if (successResponse.data.code === 1) {
+            this.$message({
+              type: 'error',
+              message: '没有该账号'
+            })
+          } else if (successResponse.data.name !== '') {
+            // 外部变量 用于接收data
+            // let __this = this
             _this.$store.commit('login', _this.loginForm)
             let path = this.$route.query.redirect
             this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
             this.$message({
               type: 'success',
               message: '登录成功'
-            })
-          } else if (successResponse.data === 3) {
-            this.$message({
-              type: 'error',
-              message: '密码错误'
-            })
-          } else if (successResponse.data === 2) {
-            this.$message({
-              type: 'error',
-              message: '没有该账号'
             })
           }
         })
@@ -158,14 +160,39 @@ export default {
       this.registerVisible = true
     },
     register (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     alert('submit!')
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
+      this.$axios
+        .post('/register', {
+          accountId: 12345678,
+          name: this.registerForm.username,
+          code: this.registerForm.password,
+          avatar: ''
+        })
+        .then(successResponse => {
+          console.log(successResponse.data)
+          if (successResponse.data.code === 3) {
+            this.$message({
+              type: 'success',
+              message: '注册成功'
+            })
+            this.registerVisible = false
+          } else if (successResponse.data.code === 4) {
+            this.$message({
+              type: 'warning',
+              message: '已存在该用户'
+            })
+          }
+        })
+        .catch(failResponse => {
+          console.log(failResponse.data)
+        })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
