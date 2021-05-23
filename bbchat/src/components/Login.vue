@@ -34,8 +34,8 @@
                :modal-append-to-body="false"
                :center="true"
     >
-      <el-form :model="registerForm" @submit.native.prevent status-icon :rules="rules" ref="ruleForm">
-        <el-form-item label="用户名" :label-width="formLabelWidth">
+      <el-form :model="registerForm" @submit.native.prevent status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
+        <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
           <el-input type="primary" v-model="registerForm.username" auto-complete="off" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
@@ -46,7 +46,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="registerVisible = false">取 消</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
         <el-button type="primary" @click="register('ruleForm')">确 定</el-button>
       </div>
     </el-dialog>
@@ -125,11 +125,12 @@ export default {
       console.log(this.$store.state)
       this.$axios
         .post('/login', {
-          username: this.loginForm.username,
-          password: this.loginForm.password
+          accountId: this.loginForm.username,
+          code: this.loginForm.password
         })
         .then(successResponse => {
-          if (successResponse.data.code === 200) {
+          console.log(successResponse.data)
+          if (successResponse.data === 200) {
             _this.$store.commit('login', _this.loginForm)
             let path = this.$route.query.redirect
             this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
@@ -137,14 +138,20 @@ export default {
               type: 'success',
               message: '登录成功'
             })
-          } else {
+          } else if (successResponse.data === 3) {
             this.$message({
               type: 'error',
-              message: '密码或账号错误'
+              message: '密码错误'
+            })
+          } else if (successResponse.data === 2) {
+            this.$message({
+              type: 'error',
+              message: '没有该账号'
             })
           }
         })
         .catch(failResponse => {
+          console.log(failResponse.data)
         })
     },
     toRegister () {
@@ -159,6 +166,9 @@ export default {
           return false
         }
       })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.badbao.bbchat;
+package com.bbchat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

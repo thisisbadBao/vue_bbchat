@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <!-- 导入配置文件的地址-->
+    <properties resource="application.properties"/>
+
+    <!--    指定连接数据库的 JDBC 驱动包的所在位置 一定要指定到你 本机的完整路径-->
+    <classPathEntry location="/Users/thisisbadbao/.m2/repository/mysql/mysql-connector-java/8.0.23/mysql-connector-java-8.0.23.jar"/>
+    <!--    配置表信息内容体  targetRuntime采用 MyBatis3的版本 -->
+    <context id="context" targetRuntime="MyBatis3Simple">
+        <!--        抑制生成注释 由于生成的注释都是英文的  所以可以不让他生成 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <!--        配置数据库连接信息-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://sh-cynosdbmysql-grp-gouaz1ru.sql.tencentcdb.com:20482/bbchat"
+                        userId="root"
+                        password="Bbchat123456">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--      生成实体model类 第一个指向的是model类的包名 第二个路径是放在什么地方  -->
+        <javaModelGenerator targetPackage="com.bbchat.dao.entity"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--       生成mabatis的mapper.xml文件 第一个指向的是 包名  第二个生成的文件放的路径-->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!--        生成mybatis的mapper接口类核心文件 指定mapper接口类的包名 生成mapper接口放在什么路径-->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.bbchat.dao.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!--        数据库表明对应的Java模型类名-->
+        <table tableName="account"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"/>
+        <table tableName="admin"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"/>
+        <table tableName="message"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"/>
+    </context>
+</generatorConfiguration>

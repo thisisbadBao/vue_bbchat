@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbchat.dao.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.bbchat.dao.entity.Message">
+    <id column="accountId" jdbcType="VARCHAR" property="accountid" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="context" jdbcType="VARCHAR" property="context" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from message
+    where accountId = #{accountid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bbchat.dao.entity.Message">
+    insert into message (accountId, time, context
+      )
+    values (#{accountid,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{context,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.bbchat.dao.entity.Message">
+    update message
+    set time = #{time,jdbcType=TIMESTAMP},
+      context = #{context,jdbcType=VARCHAR}
+    where accountId = #{accountid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select accountId, time, context
+    from message
+    where accountId = #{accountid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select accountId, time, context
+    from message
+  </select>
+  <resultMap id="BaseResultMap" type="com.bbchat.dao.entity.Message">
+    <id column="accountId" jdbcType="VARCHAR" property="accountid" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="context" jdbcType="VARCHAR" property="context" />
+  </resultMap>
+
+</mapper>
