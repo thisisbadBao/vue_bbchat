@@ -7,6 +7,9 @@ export default new Vuex.Store({
   state: {
     user: {
       username: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username
+    },
+    room: {
+      currentRoom: '1'
     }
   },
   mutations: {

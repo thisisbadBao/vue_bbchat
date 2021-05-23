@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // 导入刚才编写的组件
-import AppIndex from '@/components/home/AppIndex'
-import Login from '@/components/Login'
+// import AppIndex from '@/components/home/AppIndex'
+import Login from '../components/Login'
 import Home from '../components/Home'
+import ChatIndex from '../components/ChatRoom/ChatIndex'
 
 Vue.use(Router)
 
@@ -25,12 +26,20 @@ export default new Router({
       children: [
         {
           path: '/index',
-          name: 'AppIndex',
-          component: AppIndex,
+          name: 'ChatRoom',
+          component: ChatIndex,
           meta: {
             requireAuth: true
           }
         }
+        // {
+        //   path: '/index',
+        //   name: 'AppIndex',
+        //   component: AppIndex,
+        //   meta: {
+        //     requireAuth: true
+        //   }
+        // }
       ]
     }
   ]

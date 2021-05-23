@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-bodd{
+body{
   height: 100%;
 }
 #app {
