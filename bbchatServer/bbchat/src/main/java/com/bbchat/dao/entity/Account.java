@@ -19,10 +19,14 @@ public class Account {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private String type;
 
 }
 
+=======
+}
+>>>>>>> parent of 8b2d519 (add webSocket)
 =======
 }
 >>>>>>> parent of 8b2d519 (add webSocket)
