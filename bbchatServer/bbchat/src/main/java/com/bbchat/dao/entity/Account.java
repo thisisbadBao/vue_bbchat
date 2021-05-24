@@ -6,22 +6,6 @@ import javax.persistence.Id;
 
 @Data
 public class Account {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-    private String accountId;
-=======
-    private String accountid;
->>>>>>> parent of c0d8852 (asd)
-
-=======
->>>>>>> parent of 8b2d519 (add webSocket)
-=======
->>>>>>> parent of 8b2d519 (add webSocket)
-=======
->>>>>>> parent of 8b2d519 (add webSocket)
     @Id
     private String accountid;
 
@@ -33,16 +17,7 @@ public class Account {
 
     private Boolean able;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+    private String type;
+
 }
-=======
-}
->>>>>>> parent of 8b2d519 (add webSocket)
-=======
-}
->>>>>>> parent of 8b2d519 (add webSocket)
-=======
-}
->>>>>>> parent of 8b2d519 (add webSocket)
+

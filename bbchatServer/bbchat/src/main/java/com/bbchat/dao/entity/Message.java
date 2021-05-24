@@ -6,11 +6,13 @@ import javax.persistence.Id;
 import java.util.Date;
 @Data
 public class Message {
-    @Id
-    private String accountid;
+
+    private String name;
 
     private Date time;
 
     private String context;
+
+    private int msg_source;
 
 }
