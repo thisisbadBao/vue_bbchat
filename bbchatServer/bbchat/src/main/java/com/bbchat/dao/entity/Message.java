@@ -9,12 +9,17 @@ public class Message {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     @Id
     private String accountid;
 >>>>>>> parent of 8b2d519 (add webSocket)
 
     private Date time;
+=======
+    @Id
+    private String accountid;
+>>>>>>> parent of 8b2d519 (add webSocket)
 =======
     @Id
     private String accountid;
@@ -31,9 +36,13 @@ public class Message {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     private int msg_source;
 
 }
+=======
+}
+>>>>>>> parent of 8b2d519 (add webSocket)
 =======
 }
 >>>>>>> parent of 8b2d519 (add webSocket)

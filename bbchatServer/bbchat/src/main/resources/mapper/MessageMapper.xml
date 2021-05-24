@@ -8,8 +8,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <result column="msg_source" jdbcType="INT" property="msg_source" />
     <result column="name" jdbcType="VARCHAR" property="name"/>
+=======
+>>>>>>> parent of 8b2d519 (add webSocket)
 =======
 >>>>>>> parent of 8b2d519 (add webSocket)
 =======
