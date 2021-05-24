@@ -8,9 +8,12 @@ import javax.persistence.Id;
 public class Account {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     private String accountId;
 
+=======
+>>>>>>> parent of 8b2d519 (add webSocket)
 =======
 >>>>>>> parent of 8b2d519 (add webSocket)
 =======
@@ -28,7 +31,11 @@ public class Account {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of 8b2d519 (add webSocket)
 =======
 }
 >>>>>>> parent of 8b2d519 (add webSocket)
