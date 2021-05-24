@@ -20,7 +20,7 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Object registerUser(Register register) {
         Account account= new Account();
-        account.setAccountId(register.getAccountId());
+        account.setAccountid(register.getAccountId());
         account.setName(register.getName());
         account.setCode(register.getCode());
         account.setAble(true);
@@ -43,10 +43,11 @@ public class AccountServiceImpl implements AccountService{
         String accountId = login.getAccountId();
         String code = login.getCode();
         Account account = new Account();
-        account.setAccountId(accountId);
+        account.setAccountid(accountId);
         if(accountMapper.selectByPrimaryKey(account)==null){
             System.out.println("没有该用户");
             return new Result(1);
+
         }
         if(!code.equals(accountMapper.selectByPrimaryKey(account).getCode())){
             System.out.println("密码错误");

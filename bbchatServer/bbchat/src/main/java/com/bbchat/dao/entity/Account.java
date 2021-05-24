@@ -9,8 +9,12 @@ public class Account {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     private String accountId;
+=======
+    private String accountid;
+>>>>>>> parent of c0d8852 (asd)
 
 =======
 >>>>>>> parent of 8b2d519 (add webSocket)
