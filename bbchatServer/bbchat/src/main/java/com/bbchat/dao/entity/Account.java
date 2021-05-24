@@ -17,7 +17,11 @@ public class Account {
 
     private Boolean able;
 
+<<<<<<< HEAD
     private String type;
 
 }
 
+=======
+}
+>>>>>>> parent of 8b2d519 (add webSocket)

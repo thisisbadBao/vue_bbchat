@@ -2,10 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bbchat.dao.mapper.MessageMapper">
   <resultMap id="BaseResultMap" type="com.bbchat.dao.entity.Message">
+    <id column="accountId" jdbcType="VARCHAR" property="accountid" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="context" jdbcType="VARCHAR" property="context" />
+<<<<<<< HEAD
     <result column="msg_source" jdbcType="INT" property="msg_source" />
     <result column="name" jdbcType="VARCHAR" property="name"/>
+=======
+>>>>>>> parent of 8b2d519 (add webSocket)
   </resultMap>
 
 </mapper>
