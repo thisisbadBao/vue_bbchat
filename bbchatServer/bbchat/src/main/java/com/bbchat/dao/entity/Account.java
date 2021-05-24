@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Account {
-    private String accountid;
+    private String accountId;
 
     private String name;
 

@@ -1,5 +1,7 @@
 package com.bbchat.websocket;
 
+import com.bbchat.dao.entity.Account;
+import com.bbchat.dao.entity.Message;
 import com.bbchat.dao.mapper.AccountMapper;
 import com.bbchat.dao.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -45,7 +48,7 @@ public class MyWebSocket {
 
         for(int i = 0;i < users.size(); i ++){
             if(nickname.equals( users.get(i))){
-                this.session.getAsyncRemote().sendText("当前用户已登录");
+                this.session.getAsyncRemote().sendText("当前用户已连接入聊天室");
                 return;
             }
         }
@@ -75,9 +78,24 @@ public class MyWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session, @PathParam("nickname") String nickname){
+        //判断当前用户是否已被禁言
+        Account account = accountMapper.getByName(nickname);
+        if(!account.getAble()){
+            this.session.getAsyncRemote().sendText("你已被禁言，无法发送消息");
+            return ;
+        }
+
         System.out.println("来自客户端的消息-->"+nickname+":"+message);
         //群发消息
         broadcast(nickname+":"+message);
+
+        //将用户发送的消息存入数据库，方便之后读出
+        Message message1 = new Message();
+        message1.setContext(message);
+        message1.setTime(new Date());
+        message1.setMsgSource(1);
+        message1.setName(nickname);
+        messageMapper.insertSelective(message1);
     }
 
     /**
