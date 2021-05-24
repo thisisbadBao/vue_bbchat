@@ -36,7 +36,8 @@ export default {
   grid-area: content;
   /*border: azure solid 5px;*/
   /*position: fixed;*/
-  /*margin-bottom: 50px;*/
+  margin-bottom: 50px;
+  /*position: fixed;*/
 }
 
 .wrapper {

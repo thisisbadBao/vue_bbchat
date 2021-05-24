@@ -1,12 +1,15 @@
 package com.bbchat.dao.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
-    @Id
     private String accountid;
 
     private String name;
@@ -16,5 +19,7 @@ public class Account {
     private String avatar;
 
     private Boolean able;
+
+    private String type;
 
 }

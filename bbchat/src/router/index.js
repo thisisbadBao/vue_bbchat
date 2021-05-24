@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import Login from '../components/Login'
 import Home from '../components/Home'
 import ChatIndex from '../components/ChatRoom/ChatIndex'
-
+import SettingIndex from '../components/Setting/SettingIndex'
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +28,14 @@ export default new Router({
           path: '/index',
           name: 'ChatRoom',
           component: ChatIndex,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/setting',
+          name: 'setting',
+          component: SettingIndex,
           meta: {
             requireAuth: true
           }
