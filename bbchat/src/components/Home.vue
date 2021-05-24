@@ -37,6 +37,7 @@ export default {
   /*border: azure solid 5px;*/
   /*position: fixed;*/
   /*margin-bottom: 50px;*/
+  margin-bottom: 50px;
 }
 
 .wrapper {

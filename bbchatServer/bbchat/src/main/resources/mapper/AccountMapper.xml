@@ -7,19 +7,7 @@
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="able" jdbcType="BIT" property="able" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     <result column="type" jdbcType="VARCHAR" property="type"/>
-=======
->>>>>>> parent of 8b2d519 (add webSocket)
-=======
->>>>>>> parent of 8b2d519 (add webSocket)
-=======
->>>>>>> parent of 8b2d519 (add webSocket)
-=======
->>>>>>> parent of 8b2d519 (add webSocket)
   </resultMap>
 
 </mapper>

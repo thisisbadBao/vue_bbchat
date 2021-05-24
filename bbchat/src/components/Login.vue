@@ -1,5 +1,5 @@
 <template>
-  <body id="backgroundImg">
+  <div id="backgroundImg">
     <h1>bbChat</h1>
     <el-form class="login-container"
              label-position="left"
@@ -38,6 +38,9 @@
         <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
           <el-input type="primary" v-model="registerForm.username" auto-complete="off" style="width: 400px"></el-input>
         </el-form-item>
+        <el-form-item label="账号(数字)" :label-width="formLabelWidth" prop="accountId">
+          <el-input type="primary" v-model.number="registerForm.accountId" auto-complete="off" style="width: 400px"></el-input>
+        </el-form-item>
         <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
           <el-input type="password" v-model="registerForm.password" auto-complete="off" style="width: 400px"></el-input>
         </el-form-item>
@@ -50,13 +53,30 @@
         <el-button type="primary" @click="register('ruleForm')">确 定</el-button>
       </div>
     </el-dialog>
-  </body>
+  </div>
 </template>
 
 <script>
+import bus from '../assets/eventBus'
 export default {
   name: 'Login',
   data () {
+    let checkId = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('账号不能为空'))
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字值'))
+        } else {
+          if (value < 9999) {
+            callback(new Error('账号至少为5位数字'))
+          } else {
+            callback()
+          }
+        }
+      }, 1000)
+    }
     let validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
@@ -86,16 +106,20 @@ export default {
       registerVisible: false,
       registerForm: {
         username: '',
+        accountId: '',
         password: '',
         checkPass: ''
       },
       formLabelWidth: '100px',
       rules: {
         pass: [
-          { validator: validatePass, trigger: 'blur' }
+          {validator: validatePass, trigger: 'blur'}
         ],
         checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
+          {validator: validatePass2, trigger: 'blur'}
+        ],
+        accountId: [
+          {validator: checkId, trigger: 'blur'}
         ]
       }
     }
@@ -143,6 +167,9 @@ export default {
           } else if (successResponse.data.name !== '') {
             // 外部变量 用于接收data
             // let __this = this
+            // console.log(successResponse.data.name)
+            let name = successResponse.data.name
+            bus.$emit('sendUsername', name)
             _this.$store.commit('login', _this.loginForm)
             let path = this.$route.query.redirect
             this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
@@ -160,17 +187,17 @@ export default {
       this.registerVisible = true
     },
     register (formName) {
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     alert('submit!')
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
       this.$axios
         .post('/register', {
-          accountId: 12345678,
+          accountId: this.registerForm.accountId,
           name: this.registerForm.username,
           code: this.registerForm.password,
           avatar: ''

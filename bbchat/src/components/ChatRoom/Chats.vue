@@ -4,17 +4,26 @@
       <el-tabs class="messageBox" stretch>
         <el-tab-pane>
           <span slot="label"><i class="el-icon-chat-line-round"></i></span>
-          <div>{{item.chatTitle}}</div>
+          <div class="messageWrapper">
+            <div class="roomTitle">{{item.chatTitle}}
+              <el-button class="primary" @click="initWebSocket">连接webSocket</el-button>
+              <el-button class="primary" @click="closeWebSocket">断开连接</el-button>
+            </div>
+            <div id="message">{{item.message}}
+              <!--            message <br>message <br>message <br>message <br>message <br>message <br>message <br>message <br>message <br>message <br>message <br>message <br>message <br>message <br>-->
+            </div>
+          </div>
         </el-tab-pane>
         <el-tab-pane>
           <span slot="label"><i class="el-icon-user-solid"></i></span>
           用户列表
+          <h5>{{username}}</h5>
         </el-tab-pane>
       </el-tabs>
       <div class="messageInputBox">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item>
-            <el-input v-model="formInline.messageInput" type="textarea" aria-placeholder="输入你想发送的内容" style="width: 600px"></el-input>
+            <el-input v-model="formInline.messageInput" type="textarea" aria-placeholder="输入你想发送的内容" style="width: 600px" id="textArea"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="sendMessage">发送</el-button>
@@ -31,6 +40,8 @@ export default {
   name: 'Chats',
   data () {
     return {
+      username: '',
+      webSocket: null,
       formInline: {
         messageInput: ''
       },
@@ -40,11 +51,20 @@ export default {
         {
           chatTitle: 'initial room',
           chatName: '1',
-          isActive: true
+          isActive: true,
+          message: ''
         }
       ],
       chatIndex: 1
     }
+  },
+  created () {
+    // let name = localStorage.getItem('username')
+    this.username = localStorage.getItem('username')
+    // this.initWebSocket()
+  },
+  destroyed () {
+    this.closeWebSocket()
   },
   mounted () {
     bus.$on('sendCurrentChat', para => {
@@ -61,7 +81,8 @@ export default {
       this.chatSections.push({
         chatTitle: para,
         chatName: this.currentChat,
-        isActive: true
+        isActive: true,
+        message: ''
       })
     })
     bus.$on('sendOpenRoom', para => {
@@ -75,24 +96,121 @@ export default {
       }
       document.getElementById(this.currentChat).style.display = 'grid'
     })
+    bus.$on('sendUsername', para => {
+      // console.log(para)
+      // this.username = para
+      // this.initWebSocket()
+      localStorage.setItem('username', para)
+    })
   },
   methods: {
     sendMessage () {
+      let msg = this.formInline.messageInput
+      this.webSocket.send(msg)
+      this.formInline.messageInput = ''
+    },
+    initWebSocket () {
+      let _this = this
+      // 判断当前浏览器是否支持WebSocket
+      if ('WebSocket' in window) {
+        this.webSocket = new WebSocket('ws://localhost:8446/websocket/' + this.username)
+        console.log('当前用户：' + this.username)
+      } else {
+        alert('Not support websocket')
+      }
+      // 连接发生错误的回调方法
+      this.webSocket.onerror = function () {
+        _this.$message({
+          type: 'warning',
+          message: 'webSocket Error!'
+        })
+        // _this.initWebSocket()
+        // console.log('error!')
+      }
+      // 连接成功建立的回调方法
+      this.webSocket.onopen = function (event) {
+        _this.$message({
+          type: 'success',
+          message: '成功建立连接!'
+        })
+      }
+      // 接收到消息的回调方法
+      this.webSocket.onmessage = function (event) {
+        _this.showMessage(event.data)
+      }
+      // 连接关闭的回调方法
+      this.webSocket.onclose = function () {
+        _this.$message({
+          type: 'success',
+          message: '关闭连接！'
+        })
+      }
+      // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+      window.onbeforeunload = function () {
+        this.webSocket.close()
+      }
+    },
+    closeWebSocket () {
+      this.webSocket.close()
+    },
+    // 显示消息
+    showMessage (msg) {
+      for (let room of this.chatSections) {
+        if (room.isActive === true) {
+          document.getElementById('message').innerHTML += msg + '<br/>'
+        }
+        // document.getElementById('message').innerHTML.replace(/\n/g, '<br/>')
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.message{
+  grid-area: message;
+  border: #444444 solid 2px;
+  overflow: auto;
+  /*margin-bottom: 20px;*/
+  position: fixed;
+  top: 180px;
+  bottom: 170px;
+  right: 10px;
+  left: 390px;
+}
+
+.roomTitle{
+  grid-area: roomTitle;
+  /*border: #222222 solid 5px;*/
+}
+
+.messageWrapper{
+  display: grid;
+  grid-gap: 5px;
+  grid-template-rows: 1fr 9fr;
+  height: 100%;
+  grid-template-areas:
+    "roomTitle"
+    "message";
+  /*border: #26BCD5 solid;*/
+  border-radius: 10px;
+  color: #444444;
+}
+
 /*消息界面*/
 .messageBox {
   grid-area: messageBox;
-  margin: 10px 10px 5px 10px;
+  /*margin: 10px 10px 5px 10px;*/
   border-radius: 10px;
   /*border: 3px solid #444444;*/
   padding: 5px;
   background: url("../../assets/message_bg.png");
   background-size: cover;
+  position: fixed;
+  top: 65px;
+  bottom: 170px;
+  left: 380px;
+  right: 10px;
 }
 
 /*输入区域*/
@@ -106,7 +224,7 @@ export default {
 .chatWrapper{
   display: grid;
   grid-gap: 5px;
-  grid-template-rows: 6fr 1fr;
+  grid-template-rows: 7fr 1fr;
   height: 100%;
   grid-template-areas:
     "messageBox"

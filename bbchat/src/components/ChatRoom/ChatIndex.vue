@@ -28,7 +28,7 @@ export default {
   background: url("../../assets/list_bg.png");
   background-size: cover;
   margin-left: 20px;
-  overflow: auto;
+  /*position: fixed;*/
 }
 
 /*聊天界面*/
