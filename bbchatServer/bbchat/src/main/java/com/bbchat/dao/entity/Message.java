@@ -1,21 +1,16 @@
 package com.bbchat.dao.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import java.util.Date;
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Message {
-    private Date time;
+    @Id
+    private String accountid;
 
-    private String name;
+    private Date time;
 
     private String context;
 
-    private Integer msgSource;
 }

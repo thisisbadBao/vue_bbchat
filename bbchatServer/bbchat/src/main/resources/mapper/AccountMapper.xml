@@ -7,7 +7,6 @@
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="able" jdbcType="BIT" property="able" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
   </resultMap>
 
 </mapper>

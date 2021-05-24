@@ -1,16 +1,17 @@
 package com.bbchat.dao.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Account {
+<<<<<<< HEAD
     private String accountId;
+=======
+    @Id
+    private String accountid;
+>>>>>>> parent of 8b2d519 (add webSocket)
 
     private String name;
 
@@ -19,7 +20,5 @@ public class Account {
     private String avatar;
 
     private Boolean able;
-
-    private String type;
 
 }

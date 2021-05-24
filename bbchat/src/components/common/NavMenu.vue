@@ -21,7 +21,6 @@ export default {
     return {
       navList: [
         {name: '/index', navItem: '首页'},
-        {name: '/setting', navItem: '个人设置'},
         {name: '/login', navItem: '重新登录'}
       ]
     }
