@@ -2,8 +2,8 @@ package com.bbchat.websocket;
 
 import com.bbchat.dao.entity.Account;
 import com.bbchat.dao.entity.Message;
-import com.bbchat.dao.mapper.AccountMapper;
-import com.bbchat.dao.mapper.MessageMapper;
+import com.bbchat.service.AccountService;
+import com.bbchat.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,13 +30,17 @@ public class MyWebSocket {
 
     private String nickname;
 
-    //用于判断该用户是否又权限发消息
-    @Autowired
-    private AccountMapper accountMapper;
+    private static AccountService accountService;
 
-    //用于存入已发出的消息
+    private static MessageService messageService;
+
+
     @Autowired
-    private MessageMapper messageMapper;
+    public void setApplicationContext(AccountService accountService,MessageService messageService){
+        MyWebSocket.accountService = accountService;
+        MyWebSocket.messageService = messageService;
+    }
+
 
     /**
      * 有新用户连接
@@ -49,7 +53,7 @@ public class MyWebSocket {
 
         for(int i = 0;i < users.size(); i ++){
             if(nickname.equals( users.get(i))){
-                this.session.getAsyncRemote().sendText("当前用户已连接入聊天室");
+                this.session.getAsyncRemote().sendText("当前用户已连接入聊天室,不可重新连接！");
                 return;
             }
         }
@@ -79,11 +83,11 @@ public class MyWebSocket {
      */
     @OnMessage
     public void onMessage(String message, Session session, @PathParam("nickname") String nickname){
-
         //判断当前用户是否已被禁言
-        Account account = accountMapper.getByName(nickname);
+        Account account = accountService.getUser(nickname);
         if(!account.getAble()){
             this.session.getAsyncRemote().sendText("你已被禁言，无法发送消息");
+            return;
         }
 
         System.out.println("来自客户端的消息-->"+nickname+":"+message);
@@ -96,7 +100,7 @@ public class MyWebSocket {
         message1.setTime(new Date());
         message1.setMsg_source(1);
         message1.setName(nickname);
-        messageMapper.insert(message1);
+        messageService.insertMessage(message1);
 
     }
 

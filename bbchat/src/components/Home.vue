@@ -34,10 +34,12 @@ export default {
 
 .content{
   grid-area: content;
-  /*border: azure solid 5px;*/
-  /*position: fixed;*/
-  /*margin-bottom: 50px;*/
-  margin-bottom: 50px;
+  /*border: #222222 solid 5px;*/
+  position: fixed;
+  bottom: 60px;
+  top: 70px;
+  right: 5px;
+  left: 5px;
 }
 
 .wrapper {
@@ -56,8 +58,8 @@ export default {
   background-size: cover;
   position: fixed;
   top: 0;
-  right: 0;
-  bottom: 0;
+  /*right: 0;*/
+  /*bottom: 0;*/
 }
 .box {
   color: #222222;    /*字体颜色*/

@@ -1,6 +1,7 @@
 package com.bbchat.controller;
 
 import com.bbchat.common.annotation.WebResponse;
+import com.bbchat.dao.dto.Admin;
 import com.bbchat.dao.dto.Login;
 import com.bbchat.dao.dto.Register;
 import com.bbchat.dao.dto.UserInfo;
@@ -33,7 +34,25 @@ public class AccountController {
     @ResponseBody
     public Object login(
             @RequestBody Login login
-            ){
+    ){
         return accountService.LoginUser(login);
+    }
+
+    //管理员禁言
+    @PostMapping("/stop")
+    @ResponseBody
+    public Object stop(
+            @RequestBody Admin admin
+    ){
+        return accountService.stopUser(admin);
+    }
+
+    //管理员解除禁言
+    @PostMapping("/enable")
+    @ResponseBody
+    public Object enable(
+            @RequestBody Admin admin
+    ){
+        return accountService.enableUser(admin);
     }
 }

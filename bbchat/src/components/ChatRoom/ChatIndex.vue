@@ -27,15 +27,24 @@ export default {
   padding: 8px;
   background: url("../../assets/list_bg.png");
   background-size: cover;
-  margin-left: 20px;
-  /*position: fixed;*/
+  /*margin-left: 20px;*/
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  width: 25%;
 }
 
 /*聊天界面*/
 .content {
   grid-area: content;
   /*border: #222222 solid 5px;*/
-  margin-right: 20px;
+  /*margin-right: 20px;*/
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  right: 5px;
+  width: 70%;
+  /*height: 100%;*/
 }
 
 /*组件页面布局*/
@@ -47,6 +56,7 @@ export default {
     "sidebar content";
   color: #444;
   height: 100%;
+  /*width: 100%;*/
 }
 
 .box {
