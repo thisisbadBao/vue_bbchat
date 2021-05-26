@@ -22,7 +22,7 @@
         <el-button type="primary" @click="toAddRoom(form.name)">确 定</el-button>
       </div>
     </el-dialog>
-    <el-button type="primary" plain @click="createRoomVisible = true">创建房间</el-button>
+<!--    <el-button type="primary" plain @click="createRoomVisible = true">创建房间</el-button>-->
 <!--    -->
     <el-menu-item v-for="item in rooms" :index="item.name" :key="item.name" @click="getCurrentActive(item.name)">
       <i class="el-icon-menu"></i>
@@ -39,27 +39,40 @@ export default {
   components: {
     CreateRoom
   },
+  // created () {
+  //   this.addRoom('room2')
+  //   this.addRoom('room3')
+  // },
   data () {
     return {
       // 房间列表
       currentRoom: '1',
       rooms: [
         {
-          title: 'initial room',
+          title: 'room1',
           name: '1'
+        },
+        {
+          title: 'room2',
+          name: '2'
         }
       ],
-      roomIndex: 1,
+      roomIndex: 2,
       // 聊天室
       currentChat: '1',
       chatSections: [
         {
-          chatTitle: 'initial room',
+          chatTitle: 'room1',
           chatName: '1',
           isActive: true
+        },
+        {
+          chatTitle: 'room2',
+          chatName: '2',
+          isActive: false
         }
       ],
-      chatIndex: 1,
+      chatIndex: 2,
       // 创建聊天室表单
       createRoomVisible: false,
       form: {

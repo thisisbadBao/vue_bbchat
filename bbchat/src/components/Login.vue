@@ -173,10 +173,12 @@ export default {
             _this.$store.commit('login', _this.loginForm)
             let path = this.$route.query.redirect
             this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
+            // this.$router.push({path: name + '/' + this.$route.path})
             this.$message({
               type: 'success',
-              message: '登录成功'
+              message: '登录成功，欢迎' + name
             })
+            this.$cookies.set('username', name, '1d')
           }
         })
         .catch(failResponse => {

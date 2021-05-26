@@ -1,10 +1,7 @@
 package com.bbchat.controller;
 
 import com.bbchat.common.annotation.WebResponse;
-import com.bbchat.dao.dto.Admin;
-import com.bbchat.dao.dto.Login;
-import com.bbchat.dao.dto.Register;
-import com.bbchat.dao.dto.UserInfo;
+import com.bbchat.dao.dto.*;
 import com.bbchat.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,5 +51,23 @@ public class AccountController {
             @RequestBody Admin admin
     ){
         return accountService.enableUser(admin);
+    }
+
+    //修改昵称
+    @PostMapping("/name")
+    @ResponseBody
+    public Object changeName(
+            @RequestBody User user
+    ){
+        return accountService.changeName(user);
+    }
+
+    //修改密码
+    @PostMapping("/code")
+    @ResponseBody
+    public Object changeCode(
+            @RequestBody Code code
+    ){
+        return accountService.changeCode(code);
     }
 }
