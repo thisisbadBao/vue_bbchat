@@ -7,7 +7,7 @@
       <router-view/>
     </div>
     <div class="box footer">
-      byc wbj xr yzl@SE2021
+      byc_wbj_xr_yzl@COSE2021
     </div>
   </div>
 </template>

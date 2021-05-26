@@ -24,4 +24,7 @@ public interface AccountMapper extends Mapper<Account> {
     @Update("UPDATE account SET code='${new_code}' WHERE name='${name}'")
     void changeCode(String new_code, String name);
 
+    @Select("SELECT avatar FROM account where name='${name}'")
+    String getAvatarOfUser(String name);
+
 }

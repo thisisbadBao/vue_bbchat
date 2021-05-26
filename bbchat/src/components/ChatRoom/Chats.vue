@@ -6,7 +6,7 @@
                  :modal-append-to-body="false"
                  :center="true"
                   title="历史聊天记录">
-        <MessageBox class="chatHistoryWrapper" v-for="(msgHisItem, index) in item.chatHistory" :key="index" :message-text="msgHisItem.msg" :message-date="msgHisItem.date" :avatar-src="avatarUrl">
+        <MessageBox v-for="(msgHisItem, index) in item.chatHistory" :key="index" :message-text="msgHisItem.msg" :message-date="msgHisItem.date" :avatar-src="''" >
         </MessageBox>
       </el-dialog>
       <div class="messageBox" >
@@ -20,7 +20,7 @@
                 <el-button type="primary" round @click="getChatHistory(item.chatName)">查询历史记录</el-button>
               </div>
               <div id="message">
-                <MessageBox v-for="(msgItem, index) in item.message" :key="index" :message-text="msgItem.msg" :message-date="msgItem.date" :avatar-src="avatarUrl">
+                <MessageBox v-for="(msgItem, index) in item.message" :key="index" :message-text="msgItem.msg" :message-date="msgItem.date" :avatar-src="msgItem.avatar">
                 </MessageBox>
               </div>
             </div>
@@ -65,7 +65,7 @@ export default {
   components: {MessageBox},
   data () {
     return {
-      avatarUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      avatarUrl: '',
       chatHistoryVisible: false,
       username: '',
       webSocket: [null, null],
@@ -98,9 +98,8 @@ export default {
     }
   },
   created () {
-    // let name = localStorage.getItem('username')
-    // this.username = localStorage.getItem('username')
     this.username = this.$cookies.get('username')
+    this.avatarUrl = this.$cookies.get('avatarUrl')
     // this.initWebSocket(1)
   },
   destroyed () {
@@ -230,16 +229,16 @@ export default {
             message: str,
             type: 'error'
           })
-        } else if (msg.indexOf('10009/') !== -1) {
-          let msgIndex = msg.lastIndexOf('/')
+        } else if (msg.indexOf('10009$') !== -1) {
+          let msgIndex = msg.lastIndexOf('$')
           let str = msg.substring(msgIndex + 1, msg.length)
-          let msgAndDate = str.split('-')
-          _this.showMessage(msgAndDate[0], msgAndDate[1], '1')
-        } else if (msg.indexOf('10010/') !== -1) {
-          let msgIndex = msg.lastIndexOf('/')
+          let msgAndDateAndAvatar = str.split('-')
+          _this.showMessage(msgAndDateAndAvatar[0], msgAndDateAndAvatar[1], msgAndDateAndAvatar[2], '1')
+        } else if (msg.indexOf('10010$') !== -1) {
+          let msgIndex = msg.lastIndexOf('$')
           let str = msg.substring(msgIndex + 1, msg.length)
-          let msgAndDate = str.split('-')
-          _this.showMessage(msgAndDate[0], msgAndDate[1], '2')
+          let msgAndDateAndAvatar = str.split('-')
+          _this.showMessage(msgAndDateAndAvatar[0], msgAndDateAndAvatar[1], msgAndDateAndAvatar[2], '1')
         }
       }
       // 连接关闭的回调方法
@@ -268,11 +267,11 @@ export default {
       // })
     },
     // 显示消息
-    showMessage (msg, date, roomName) {
+    showMessage (msg, date, avatar, roomName) {
       for (let room of this.chatSections) {
         if (room.chatName === roomName) {
           // document.getElementById('message').innerHTML += msg + '<br/>'
-          room.message.push({msg: msg, date: date})
+          room.message.push({msg: msg, date: date, avatar: avatar})
         }
         let div = document.getElementById('message')
         div.scrollTop = div.scrollHeight
@@ -409,6 +408,7 @@ export default {
 
 <style scoped>
 .chatHistoryWrapper{
+  border: #42b983 solid 5px;
 }
 
 #message{

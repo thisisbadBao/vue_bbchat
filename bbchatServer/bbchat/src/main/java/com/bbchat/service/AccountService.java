@@ -19,4 +19,6 @@ public interface AccountService {
     Object changeName(User user);
 
     Object changeCode(Code code);
+
+    String getAvatarOfUser(String name);
 }
