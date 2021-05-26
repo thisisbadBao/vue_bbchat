@@ -1,6 +1,7 @@
 <template>
   <div class="chatIndexWrapper">
     <div class="box sidebar">
+      {{username}}
       <SideMenu></SideMenu>
     </div>
     <div class="box content">
@@ -12,10 +13,24 @@
 <script>
 import SideMenu from './SideMenu'
 import Chats from './Chats'
+import bus from '../../assets/eventBus'
 export default {
   name: 'ChatIndex',
   components: {Chats, SideMenu},
-  comments: {SideMenu, Chats}
+  comments: {SideMenu, Chats},
+  data () {
+    return {
+      username: this.$cookies.get('username')
+    }
+  },
+  mounted () {
+    // this.$cookies.set('username', name, '1d')
+    bus.$on('sendUsername', para => {
+      console.log(para)
+      this.username = para
+      this.$cookies.set('username', name, '1d')
+    })
+  }
 }
 </script>
 

@@ -18,4 +18,10 @@ public interface AccountMapper extends Mapper<Account> {
     @Update("UPDATE account SET able=TRUE WHERE name='${name}'")
     void enableMessage(String name);
 
+    @Update("UPDATE account SET name='${new_name}' WHERE name='${old_name}'")
+    void changeName(String new_name, String old_name);
+
+    @Update("UPDATE account SET code='${new_code}' WHERE name='${name}'")
+    void changeCode(String new_code, String name);
+
 }

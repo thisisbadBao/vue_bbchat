@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.bbchat.dao.entity.Message">
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="context" jdbcType="VARCHAR" property="context" />
-    <result column="msg_source" jdbcType="INT" property="msg_source" />
+    <result column="msg_source" jdbcType="VARCHAR" property="msg_source" />
     <result column="name" jdbcType="VARCHAR" property="name"/>
   </resultMap>
 

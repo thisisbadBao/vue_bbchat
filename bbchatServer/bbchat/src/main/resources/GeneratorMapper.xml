@@ -8,7 +8,7 @@
     <properties resource="application.properties"/>
 
     <!--    指定连接数据库的 JDBC 驱动包的所在位置 一定要指定到你 本机的完整路径-->
-    <classPathEntry location="F:\maven\MavenLib\repository\mysql\mysql-connector-java\8.0.23\mysql-connector-java-8.0.23.jar"/>
+    <classPathEntry location="/Users/thisisbadbao/.m2/repository/mysql/mysql-connector-java/8.0.23/mysql-connector-java-8.0.23.jar"/>
     <!--    配置表信息内容体  targetRuntime采用 MyBatis3的版本 -->
     <context id="context" targetRuntime="MyBatis3Simple">
         <!--        抑制生成注释 由于生成的注释都是英文的  所以可以不让他生成 -->
@@ -45,17 +45,7 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!--        数据库表明对应的Java模型类名-->
-        <table tableName="account"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"/>
-        <table tableName="admin"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"/>
-        <table tableName="message"
+        <table tableName="room"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"

@@ -2,10 +2,7 @@ package com.bbchat.service;
 
 import com.bbchat.common.CONST;
 import com.bbchat.common.ConstantUtil;
-import com.bbchat.dao.dto.Admin;
-import com.bbchat.dao.dto.Login;
-import com.bbchat.dao.dto.Register;
-import com.bbchat.dao.dto.UserInfo;
+import com.bbchat.dao.dto.*;
 import com.bbchat.dao.entity.Account;
 import com.bbchat.dao.mapper.AccountMapper;
 import com.bbchat.exception.BizException;
@@ -140,5 +137,31 @@ public class AccountServiceImpl implements AccountService{
 
         accountMapper.enableMessage(to_who);
         return new Result(9);//返回解除禁言成功的提示消息
+    }
+
+    @Override
+    public Object changeName(User user){
+        if(user.getNew_name().equals(user.getOld_name())){
+            return new Result(11);//提示修改前后的用户名一致
+        }
+
+        if(accountMapper.getOneAccountByName(user.getNew_name()) != null){
+            return new Result(15);//无法修改为已存在的用户名
+        }
+
+        accountMapper.changeName(user.getNew_name(),user.getOld_name());
+
+        return new Result(12);//修改用户名成功
+    }
+
+    @Override
+    public Object changeCode(Code code){
+        if(!code.getOld_code().equals(accountMapper.getOneAccountByName(code.getName()).getCode())){
+            return new Result(13);//密码错误，无法修改
+        }
+
+        accountMapper.changeCode(code.getNew_code(),code.getName());
+
+        return new Result(14);//修改密码成功
     }
 }

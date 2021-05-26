@@ -5,7 +5,8 @@
         <el-avatar :size="50" shape="circle" :src="avatarSrc"></el-avatar>
       </div>
       <div class="MessageBlock">
-        {{messageText}}
+        <div class="msg">{{messageText}}</div>
+        <div class="date">{{messageDate}}</div>
       </div>
     </div>
   </div>
@@ -13,12 +14,16 @@
 
 <script>
 export default {
-  props: ['avatarSrc', 'messageText'],
+  props: ['avatarSrc', 'messageText', 'messageDate'],
   name: 'MessageBox'
 }
 </script>
 
 <style scoped>
+
+.date{
+  text-align: right;
+}
 
 .avatar{
   grid-area: avatar;
@@ -26,7 +31,7 @@ export default {
 
 .MessageBlock{
   grid-area: messageBlock;
-  /*border: #222222 solid 5px;*/
+  border-bottom: #505458 solid 1px;
   text-align: left;
 }
 
