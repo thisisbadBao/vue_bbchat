@@ -18,4 +18,6 @@ public interface MessageService {
     String[] getMessage(String msg_source);
 
     Date[] getDate(String msg_source);
+
+    String[] getName(String msg_source);
 }

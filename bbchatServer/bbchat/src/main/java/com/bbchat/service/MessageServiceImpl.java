@@ -31,4 +31,9 @@ public class MessageServiceImpl implements MessageService{
     public Date[] getDate(String msg_source) {
         return messageMapper.getDate(msg_source);
     }
+
+    @Override
+    public String[] getName(String msg_source){
+        return messageMapper.getName(msg_source);
+    }
 }

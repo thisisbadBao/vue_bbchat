@@ -1,6 +1,14 @@
 <template>
   <div>
     <div class="chatWrapper" v-for="item in chatSections" :key="item.chatName" :id="item.chatName">
+<!--      历史聊天记录窗口-->
+      <el-dialog :visible.sync="chatHistoryVisible"
+                 :modal-append-to-body="false"
+                 :center="true"
+                  title="历史聊天记录">
+        <MessageBox class="chatHistoryWrapper" v-for="(msgHisItem, index) in item.chatHistory" :key="index" :message-text="msgHisItem.msg" :message-date="msgHisItem.date" :avatar-src="avatarUrl">
+        </MessageBox>
+      </el-dialog>
       <div class="messageBox" >
         <el-tabs stretch>
           <el-tab-pane>
@@ -9,6 +17,7 @@
               <div class="roomTitle">{{item.chatTitle}}
                 <el-button type="success" round :disabled="item.isConnected" @click="initWebSocket(item.chatName)">连接房间</el-button>
                 <el-button type="warning" round @click="closeWebSocket(item.chatName)">断开连接</el-button>
+                <el-button type="primary" round @click="getChatHistory(item.chatName)">查询历史记录</el-button>
               </div>
               <div id="message">
                 <MessageBox v-for="(msgItem, index) in item.message" :key="index" :message-text="msgItem.msg" :message-date="msgItem.date" :avatar-src="avatarUrl">
@@ -57,6 +66,7 @@ export default {
   data () {
     return {
       avatarUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+      chatHistoryVisible: false,
       username: '',
       webSocket: [null, null],
       formInline: {
@@ -71,7 +81,8 @@ export default {
           isActive: true,
           message: [],
           userList: [],
-          isConnected: false
+          isConnected: false,
+          chatHistory: []
         },
         {
           chatTitle: 'room2',
@@ -79,7 +90,8 @@ export default {
           isActive: false,
           message: [],
           userList: [],
-          isConnected: false
+          isConnected: false,
+          chatHistory: []
         }
       ],
       chatIndex: 2
@@ -364,12 +376,41 @@ export default {
         .catch(fail => {
           console.log(fail.data)
         })
+    },
+    getChatHistory (roomName) {
+      let roomIndex = Number(roomName)
+      this.chatHistoryVisible = true
+      this.$axios
+        .post('/message', {
+          msg_source: roomName
+        })
+        .then(successResponse => {
+          console.log(successResponse.data)
+          let str = successResponse.data
+          if (successResponse.data !== '') {
+            this.$notify({
+              type: 'success',
+              message: '查询房间' + roomIndex + '的历史成功'
+            })
+            let allMessage = str.split('/')
+            for (let msgItem of allMessage) {
+              let msgDate = msgItem.split('-')
+              this.chatSections[roomIndex - 1].chatHistory.push({msg: msgDate[0], date: msgDate[1]})
+            }
+          }
+        })
+        .catch(failResponse => {
+          console.log(failResponse.data)
+        })
     }
   }
 }
 </script>
 
 <style scoped>
+.chatHistoryWrapper{
+}
+
 #message{
   grid-area: message;
   /*border: #444444 solid 2px;*/
