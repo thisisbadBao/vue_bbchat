@@ -164,4 +164,9 @@ public class AccountServiceImpl implements AccountService{
 
         return new Result(14);//修改密码成功
     }
+
+    @Override
+    public String getAvatarOfUser(String name) {
+        return accountMapper.getAvatarOfUser(name);
+    }
 }

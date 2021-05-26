@@ -157,13 +157,14 @@ public class MyWebSocket {
         System.out.println("来自客户端的消息-->"+nickname+":"+message);
         //群发消息
         //broadcast(nickname+":"+message);
+        String avatar = accountService.getAvatarOfUser(nickname);
         Date current = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         String time = simpleDateFormat.format(current);
         if(msg_source.equals("1")){//格式为"10009(10010)/name:message-xxxx.xx.xx xx:xx:xx
-            broadcast("10009/"+nickname+": "+message+"-"+time);
+            broadcast("10009$"+nickname+": "+message+"-"+time+"-"+avatar);  //头像也用 -  分隔
         }else{
-            broadcast("10010/"+nickname+": "+message+"-"+time);
+            broadcast("10010$"+nickname+": "+message+"-"+time+"-"+avatar);
         }
 
         //将用户发送的消息存入数据库，方便之后读出
